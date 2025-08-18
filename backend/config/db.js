@@ -1,3 +1,4 @@
+//database file to connect to MongoDB using mongoose
 import mongoose from 'mongoose';
 
 export const connectDB = async()=>{

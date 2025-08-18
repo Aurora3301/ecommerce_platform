@@ -1,3 +1,5 @@
+// controller functions from mogoose communication with database MongoDB
+
 import Product from '../models/product.model.js'; // defined Product model must need to be imported
 import mongoose from 'mongoose'; // mongoose is used to validate the id of the product
 
@@ -35,14 +37,18 @@ export const createProduct =  async (req , res) => {
 
 export const deleteProduct =  async (req, res) => {
     const {id} = req.params; // get the id from the request params
+    if (mongoose.isValidObjectId(id) === false) {
+        return res.status(400).json({ success: false, message: 'Invalid product ID' });
+        // 400 is bad request for user
+    }
     try {
         await Product.findByIdAndDelete(id); // find the product by id and delete it
         res.status(200).json({ success: true, message: 'Product deleted successfully' });
         // 200 is success
     } catch (error) {
         console.error('Error in deleting product:', error.message);
-        res.status(404).json({ success: false, message: 'Product Not Found' });
-        // 404 is internal server error
+        res.status(500).json({ success: false, message: 'Server error' });
+        // 500 is internal server error
     }
 };
 

@@ -1,5 +1,5 @@
+// route endpoint for products
 import express from 'express';
-
 import { getProducts,createProduct , deleteProduct, updateProduct} from '../controllers/product.controller.js'; // getProducts is imported from the product.controller.js
 
 const router = express.Router();
